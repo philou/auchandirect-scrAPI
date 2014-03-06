@@ -2,6 +2,8 @@
 *.rbc
 .bundle
 .config
+.ruby-version
+Gemfile.lock
 coverage
 InstalledFiles
 lib/bundler/man
@@ -11,8 +13,14 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
+vendor
 
 # YARD artifacts
 .yardoc
 _yardoc
 doc/
+
+# emacs files
+*~
+*#
+.#*

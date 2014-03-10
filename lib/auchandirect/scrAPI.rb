@@ -19,7 +19,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require "auchandirect/scrAPI/version"
+require 'storexplore'
+require 'auchandirect/scrAPI/version'
+require 'auchandirect/scrAPI/items'
 
 module Auchandirect
   module ScrAPI

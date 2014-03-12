@@ -22,9 +22,7 @@
 require 'storexplore'
 require 'auchandirect/scrAPI/version'
 require 'auchandirect/scrAPI/items'
-
-module Auchandirect
-  module ScrAPI
-    # Your code goes here...
-  end
-end
+require 'auchandirect/scrAPI/base_cart'
+require 'auchandirect/scrAPI/dummy_cart'
+require 'auchandirect/scrAPI/cart'
+require 'auchandirect/scrAPI/invalid_account_error'

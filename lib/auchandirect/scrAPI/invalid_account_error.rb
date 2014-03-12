@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI/version.rb
+# auchandirect/scrAPI/invalid_account_error.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
 
 module Auchandirect
   module ScrAPI
-    VERSION = "0.0.1"
+    class InvalidAccountError < RuntimeError
+    end
   end
 end
-

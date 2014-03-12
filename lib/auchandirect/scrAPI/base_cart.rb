@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI/base_carts.rb
+# auchandirect/scrAPI/base_cart.rb
 #
 # Copyright (c) 2011-2014 by Philippe Bourgau. All rights reserved.
 #

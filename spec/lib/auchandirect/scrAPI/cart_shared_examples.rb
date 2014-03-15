@@ -21,28 +21,32 @@
 
 require 'spec_helper'
 
-shared_examples_for "Any Api" do
+shared_examples_for "Any Cart" do |store_cart_class, store_url|
+
+  before :all do
+    @store_url = store_url
+  end
 
   it "should know its logout url" do
-    logout_url = @store_cart_api.logout_url
+    logout_url = store_cart_class.logout_url
 
     expect(logout_url).to(match(URI.regexp(['http'])), "#{logout_url} is not an http url !")
   end
 
   it "should know its login url" do
-    expect(@store_cart_api.login_url).not_to be_empty
+    expect(store_cart_class.login_url).not_to be_empty
   end
 
   it "should know its login parameters" do
-    expect(@store_cart_api.login_parameters(@store_cart_api.valid_email, @store_cart_api.valid_password)).not_to be_nil
+    expect(store_cart_class.login_parameters(store_cart_class.valid_email, store_cart_class.valid_password)).not_to be_nil
   end
 
   {login_parameter: 'text', password_parameter: 'password'}.each do |parameter_reader, html_input_type|
     it "should know its #{parameter_reader} name" do
-      parameter_name = @store_cart_api.send(parameter_reader)
+      parameter_name = store_cart_class.send(parameter_reader)
       expect(parameter_name).not_to be_empty
 
-      param = @store_cart_api.login_parameters("","").find{|param| param['name'] == parameter_name}
+      param = store_cart_class.login_parameters("","").find{|param| param['name'] == parameter_name}
       expect(param).not_to be_nil
       expect(param['type']).to eq(html_input_type)
     end
@@ -50,7 +54,7 @@ shared_examples_for "Any Api" do
 
   it "should raise when login in with an invalid account" do
     expect(lambda {
-             @store_cart_api.login("unknown-account", "wrong-password")
+             store_cart_class.login("unknown-account", "wrong-password")
            }).to raise_error(Auchandirect::ScrAPI::InvalidAccountError)
   end
 
@@ -59,7 +63,7 @@ shared_examples_for "Any Api" do
     attr_reader :sample_item_id, :another_item_id, :store_cart_api
 
     before(:all) do
-      @api = @store_cart_api.login(@store_cart_api.valid_email, @store_cart_api.valid_password)
+      @api = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
 
       sample_items = extract_sample_items
       sample_item = sample_items.next
@@ -111,7 +115,7 @@ shared_examples_for "Any Api" do
     it "should synchronize different sessions with logout login" do
       @api.add_to_cart(1, sample_item_id)
 
-      api2 = @store_cart_api.login(@store_cart_api.valid_email, @store_cart_api.valid_password)
+      api2 = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
       begin
         api2.empty_the_cart
       ensure
@@ -119,7 +123,7 @@ shared_examples_for "Any Api" do
       end
 
       @api.logout
-      @api = @store_cart_api.login(@store_cart_api.valid_email, @store_cart_api.valid_password)
+      @api = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
 
       expect(@api.cart_value).to eq 0
     end
@@ -135,7 +139,7 @@ shared_examples_for "Any Api" do
     end
 
     def extract_sample_items
-      extract_sample_items_from(Storexplore::Api.browse(@store_items_url))
+      extract_sample_items_from(Storexplore::Api.browse(@store_url))
     end
 
     def extract_sample_items_from(category)

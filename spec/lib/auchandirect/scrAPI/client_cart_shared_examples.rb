@@ -21,9 +21,10 @@
 
 require 'spec_helper'
 
-shared_examples_for "Any Client Api" do |please_login_text|
+shared_examples_for "Any Client Cart" do |store_cart_class, please_login_text|
 
   before :all do
+    @store_cart_class = store_cart_class
     @please_login_text = please_login_text
   end
 
@@ -41,19 +42,19 @@ shared_examples_for "Any Client Api" do |please_login_text|
   private
 
   def logged_in?
-    page = @client.get(@store_cart_api.url)
+    page = @client.get(@store_cart_class.url)
     !page.body.include?(@please_login_text)
   end
 
   def login
-    params = @store_cart_api.login_parameters(@store_cart_api.valid_email, @store_cart_api.valid_password)
+    params = @store_cart_class.login_parameters(@store_cart_class.valid_email, @store_cart_class.valid_password)
     post_params = params.map {|param| {param['name'] => param['value']}}.inject &:merge
 
-    @client.post(@store_cart_api.login_url, post_params)
+    @client.post(@store_cart_class.login_url, post_params)
   end
 
   def logout
-    @client.get(@store_cart_api.logout_url)
+    @client.get(@store_cart_class.logout_url)
   end
 
 end

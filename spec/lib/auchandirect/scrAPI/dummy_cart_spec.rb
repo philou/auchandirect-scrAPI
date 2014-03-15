@@ -27,16 +27,13 @@ module Auchandirect
   module ScrAPI
 
     describe Auchandirect::ScrAPI::DummyCart do
-      it_should_behave_like "Any Api"
+      STORE_NAME = "www.cart-dummy-api-spec.com"
+
+      it_should_behave_like "Any Cart", Auchandirect::ScrAPI::DummyCart, Storexplore::Testing::DummyStore.uri(STORE_NAME)
 
       before(:all) do
-        store_name = "www.cart-dummy-api-spec.com"
-
-        Storexplore::Testing::DummyStore.wipe_out_store(store_name)
-        Storexplore::Testing::DummyStore.open(store_name).generate(3).categories.and(3).categories.and(3).items
-
-        @store_cart_api = Auchandirect::ScrAPI::DummyCart
-        @store_items_url = Storexplore::Testing::DummyStore.uri(store_name)
+        Storexplore::Testing::DummyStore.wipe_out_store(STORE_NAME)
+        Storexplore::Testing::DummyStore.open(STORE_NAME).generate(3).categories.and(3).categories.and(3).items
       end
     end
   end

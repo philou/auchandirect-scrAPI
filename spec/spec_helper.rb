@@ -19,3 +19,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
+require 'auchandirect/scrAPI'
+require 'spec_combos'
+
+# Offline testing
+require_relative 'support/offline_test_helper'
+require_relative 'support/enumerator_lazy'
+include OfflineTestHelper
+
+# Gem root dir
+AUCHANDIRECT_SCRAPI_ROOT_DIR = File.join(File.dirname(__FILE__), '..')
+
+
+# Dummy store generation
+require 'storexplore/testing'
+Storexplore::Testing.config do |config|
+  config.dummy_store_generation_dir= File.join(AUCHANDIRECT_SCRAPI_ROOT_DIR, 'tmp')
+end

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI.rb
+# spec/lib/auchandirect/scrAPI/items_spec.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2010-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,11 +19,26 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'auchandirect/scrAPI/version'
-require 'auchandirect/scrAPI/items'
-require 'auchandirect/scrAPI/base_cart'
-require 'auchandirect/scrAPI/dummy_cart'
-require 'auchandirect/scrAPI/cart'
-require 'auchandirect/scrAPI/invalid_account_error'
-require 'auchandirect/scrAPI/webrick_uri_escape_monkey_patch'
+require 'spec_helper'
+
+when_online "AuchanDirectStoreItemsAPI remote spec" do
+
+  module Auchandirect
+    module ScrAPI
+
+      describe "AuchanDirectAPI", slow: true, remote: true do
+        include_context "a scrapped store"
+        it_should_behave_like "an API"
+
+        def generate_store
+          Storexplore::Api.browse("http://www.auchandirect.fr")
+        end
+
+        it "should have absolute urls for images" do
+          expect(sample_items_attributes.map {|attr| attr[:image]}).to all_ {include("auchandirect.fr")}
+        end
+
+      end
+    end
+  end
+end

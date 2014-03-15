@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI.rb
+# lib/auchandirect/scrAPI/webrick_uri_escape_monkey_patch.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,11 +19,19 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'auchandirect/scrAPI/version'
-require 'auchandirect/scrAPI/items'
-require 'auchandirect/scrAPI/base_cart'
-require 'auchandirect/scrAPI/dummy_cart'
-require 'auchandirect/scrAPI/cart'
-require 'auchandirect/scrAPI/invalid_account_error'
-require 'auchandirect/scrAPI/webrick_uri_escape_monkey_patch'
+require "webrick/httputils"
+
+# monkey patch to avoid a regex uri encoding error when importing
+#      incompatible encoding regexp match (ASCII-8BIT regexp with UTF-8 string) (Encoding::CompatibilityError)
+#      .../webrick/httputils.rb:353:in `gsub'
+#      .../webrick/httputils.rb:353:in `_escape'
+#      .../webrick/httputils.rb:363:in `escape'
+#      from uri method
+#
+# I would be glad to find a better way to fix this !
+
+module WEBrick::HTTPUtils
+  def self.escape(s)
+    URI.escape(s)
+  end
+end

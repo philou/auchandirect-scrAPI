@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI.rb
+# spec/lib/auchandirect/scrAPI/dummy_cart_spec.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2011-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,11 +19,25 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'auchandirect/scrAPI/version'
-require 'auchandirect/scrAPI/items'
-require 'auchandirect/scrAPI/base_cart'
-require 'auchandirect/scrAPI/dummy_cart'
-require 'auchandirect/scrAPI/cart'
-require 'auchandirect/scrAPI/invalid_account_error'
-require 'auchandirect/scrAPI/webrick_uri_escape_monkey_patch'
+require 'spec_helper'
+require_relative 'cart_shared_examples'
+require 'storexplore/testing'
+
+module Auchandirect
+  module ScrAPI
+
+    describe Auchandirect::ScrAPI::DummyCart do
+      it_should_behave_like "Any Api"
+
+      before(:all) do
+        store_name = "www.cart-dummy-api-spec.com"
+
+        Storexplore::Testing::DummyStore.wipe_out_store(store_name)
+        Storexplore::Testing::DummyStore.open(store_name).generate(3).categories.and(3).categories.and(3).items
+
+        @store_cart_api = Auchandirect::ScrAPI::DummyCart
+        @store_items_url = Storexplore::Testing::DummyStore.uri(store_name)
+      end
+    end
+  end
+end

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI.rb
+# spec/support/enumerator_lazy.rb
 #
-# Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
+# Copyright (C) 2013-2014 by Philippe Bourgau. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,11 +19,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'auchandirect/scrAPI/version'
-require 'auchandirect/scrAPI/items'
-require 'auchandirect/scrAPI/base_cart'
-require 'auchandirect/scrAPI/dummy_cart'
-require 'auchandirect/scrAPI/cart'
-require 'auchandirect/scrAPI/invalid_account_error'
-require 'auchandirect/scrAPI/webrick_uri_escape_monkey_patch'
+class Enumerator::Lazy
+
+  def flatten(depth = Float::INFINITY)
+    return self if depth <= 0
+
+    Enumerator::Lazy.new(self) do |yielder, item|
+      if item.is_a? Enumerable
+        item.lazy.flatten(depth - 1).each do |e|
+          yielder.yield(e)
+        end
+      else
+        yielder.yield(item)
+      end
+    end
+  end
+
+end

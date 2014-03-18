@@ -21,6 +21,7 @@
 
 module Auchandirect
   module ScrAPI
+    # Error thrown when one tries to login with invalid credentials
     class InvalidAccountError < RuntimeError
     end
   end

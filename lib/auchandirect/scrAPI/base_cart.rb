@@ -22,18 +22,20 @@
 module Auchandirect
   module ScrAPI
 
-    # Objects providing an api like access to third party online stores
+    # Base class for objects providing an api like access to third party online stores
     class BaseCart
 
+      # :login is a synonym for :new
       class << self
         alias :login :new
       end
 
-      # main url of the store
-      # def self.url
+      # Main url of the store
       def url
         self.class.url
       end
+
+      # def self.url
 
       # url at which a client browser can login
       # def self.login_url

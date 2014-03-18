@@ -24,10 +24,10 @@ require 'json'
 module Auchandirect
   module ScrAPI
 
-    # Store API for AuchanDirect store
+    # Cart API for AuchanDirect store
     class Cart < BaseCart
 
-      # main url of the store
+      # Main url of the store
       def self.url
         "http://www.auchandirect.fr"
       end
@@ -39,11 +39,11 @@ module Auchandirect
         raise InvalidAccountError unless logged_in?
       end
 
-      # url at which a client browser can login
+      # Url at which a client browser can login
       def self.login_url
         url + login_path
       end
-      # parameters for a client side login
+      # Parameters for a client side login
       def self.login_parameters(login, password)
         default_params = post_parameters.map {|name, value| {'name' => name, 'value' => value, 'type' => 'hidden'}}
         user_params = [{'name' => FORMDATA_PARAMETER, 'value' => login_form_data(Mechanize.new), 'type' => 'hidden'},
@@ -53,40 +53,55 @@ module Auchandirect
         default_params + user_params
       end
 
-      # login and password parameters names
+      # Client side 'login' parameter name
       def self.login_parameter
         LOGIN_PARAMETER
       end
+      # Client side 'password' parameter name
       def self.password_parameter
         PASSWORD_PARAMETER
       end
 
-      # url at which a client browser can logout
+      # Url at which a client browser can logout
       def self.logout_url
         url + logout_path
       end
 
-      # logs out from the store
+      # Logs out from the store
       def logout
         get(self.class.logout_path)
       end
 
-      # total value of the remote cart
+      # Total value of the remote cart
       def cart_value
         cart_page = get("/monpanier")
         cart_page.search("span.prix-total").first.content.gsub(/€$/,"").to_f
       end
 
-      # empties the cart of the current user
+      # Empties the cart of the current user
       def empty_the_cart
         post("/boutiques.blockzones.popuphandler.cleanbasketpopup.cleanbasket")
       end
 
-      # adds items to the cart of the current user
+      # Adds items to the cart of the current user
       def add_to_cart(quantity, item_remote_id)
         quantity.times do
           post("/boutiques.mozaique.thumbnailproduct.addproducttobasket/#{item_remote_id}")
         end
+      end
+
+      # Missing methods can be forwarded to the class
+      def method_missing(method_sym, *arguments, &block)
+        if delegate_to_class?(method_sym)
+          self.class.send(method_sym, *arguments, &block)
+        else
+          super
+        end
+      end
+
+      # It can respond to messages that the class can handle
+      def respond_to?(method_sym)
+        super or delegate_to_class?(method_sym)
       end
 
       private
@@ -150,17 +165,6 @@ module Auchandirect
         {'t:ac' => "Accueil", 't:cp' => 'gabarit/generated'}
       end
 
-      def method_missing(method_sym, *arguments, &block)
-        if delegate_to_class?(method_sym)
-          self.class.send(method_sym, *arguments, &block)
-        else
-          super
-        end
-      end
-
-      def respond_to?(method_sym)
-        super or delegate_to_class?(method_sym)
-      end
       def delegate_to_class?(method_sym)
         self.class.respond_to?(method_sym)
       end

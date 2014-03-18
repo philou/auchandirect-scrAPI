@@ -22,6 +22,10 @@
 module Auchandirect
   module ScrAPI
 
+    # Storexplore api definition to browse all the items available
+    # at auchandirect.com
+    # See[https://github.com/philou/storexplore/blob/master/README.md]
+
     module Items
       NAMES_SEPARATOR = ', '
     end

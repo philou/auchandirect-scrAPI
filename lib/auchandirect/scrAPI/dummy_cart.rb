@@ -22,15 +22,18 @@
 module Auchandirect
   module ScrAPI
 
-    # Logger mock api
+    # A mock for Auchandirect::ScrAPI::Cart
+    # It provides a call log as a way of testing
     class DummyCart < BaseCart
 
       def self.url
         "http://www.#{Storexplore::Testing::DummyStoreConstants::NAME}.com"
       end
+      # The valid login to log into this dummy store
       def self.valid_email
         "valid@mail.com"
       end
+      # The valid password to log into this dummy store
       def self.valid_password
         "valid-password"
       end
@@ -53,6 +56,8 @@ module Auchandirect
         'password'
       end
 
+      # Accessors to the login and passwords used to login
+      # And to the received messages log
       attr_reader :login, :password, :log
 
       def initialize(login = nil, password = nil)
@@ -67,6 +72,7 @@ module Auchandirect
         end
       end
 
+      # Resets the session as if a new one was started
       def relog(login, password)
         if login != DummyCart.valid_email
           raise InvalidAccountError.new
@@ -104,21 +110,27 @@ module Auchandirect
         end
       end
 
+      # Collection of all the different items in the cart
       def content
         @content.keys
       end
 
+      # Is the cart empty ?
       def empty?
         @content.empty?
       end
 
+      # Does the cart contain the specified quantity of this item ?
       def containing?(item, quantity)
         @content[item] == quantity
       end
 
+      # Makes an item temporarily unavailable
       def add_unavailable_item(item)
         @unavailable_items[item] = true
       end
+
+      # Is the given item available at this moment ?
       def available?(item)
         !@unavailable_items[item]
       end

@@ -25,6 +25,16 @@ module Auchandirect
     # Storexplore api definition to browse all the items available
     # at auchandirect.com
     # See[https://github.com/philou/storexplore/blob/master/README.md]
+    #
+    # The store has 3 depths of categories.
+    # The only attribute the categories have is their name
+    # The items are all child of the bottom categories, here are
+    # their attributes
+    # * brand
+    # * name
+    # * price
+    # * image (url of the link to the image)
+    # * remote_id (the id of this item in the auchandirect database)
 
     module Items
       NAMES_SEPARATOR = ', '

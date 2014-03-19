@@ -1,6 +1,6 @@
 # Auchandirect::ScrAPI
 
-A ruby gem providing, through scrapping, an API to the french www.auchandirect.com online grocery
+A ruby gem providing, through scrapping, an API to the french www.auchandirect.fr online grocery
 
 ## Installation
 
@@ -16,9 +16,61 @@ Or install it yourself as:
 
     $ gem install auchandirect-scrAPI
 
+## Status
+
+This library should be production ready.
+* It is automaticaly tested through Travis[https://travis-ci.org/philou/auchandirect-scrAPI]
+* It should be daily tested through TravisCron[http://traviscron.pythonanywhere.com/] to quickly detect modification at auchandirect.fr
+
 ## Usage
 
-TODO: Write usage instructions here
+This API has 2 main features :
+* walking the store to collect all the different items in the different subsections
+* Connecting with a user account in order to fill his cart
+
+It is not currently possible to pay and validate an order through this API. In order to do so, a user must :
+1. first disconnect from the API
+2. only then reconnect with his account through a browser, and order his pre-filled cart
+
+### Sample usage
+
+Suppose you'd want to fill your cart with all the pizzas available on the store, this is how you would do it :
+
+```ruby
+cart = Auchandirect::ScrAPI::Cart.login('buyer@mail.org', 'password')
+
+begin
+
+  Storexplore::Api.browse('http://www.auchandirect.fr').categories.each do |cat|
+    cat.categories.each do |s_cat|
+      s_cat.categories.each do |ss_cat|
+        ss_cat.items.each do |item|
+
+          if item.attributes[:name] =~ /pizza/i
+
+            cart.add_to_cart(item.attributes[:remote_id])
+
+          end
+        end
+      end
+    end
+  end
+
+ensure
+
+  ensure cart.logout
+
+end
+
+```
+
+### Client side usage
+
+In order to make it possible for a web browser to automaticaly connect to auchandirect.fr (for example in an iframe, to pay for a cart that was previously filled with this gem on the server), the cart The Auchandirect::ScrAPI::Cart classes exposes enough information to generate the html that makes this possible. You can have a look at spec/lib/auchandirect/scrAPI/client_cart_shared_examples.rb for more details. /This whole thing remains tricky and subject to failures though./
+
+### Testing
+
+In order to run quicker and offline tests for the rest of your app, you can use Auchandirect::ScrAPI::DummyCart in place of a real cart. This cart is compatible with Storexplore's dummy store generators [https://github.com/philou/storexplore].
 
 ## Contributing
 

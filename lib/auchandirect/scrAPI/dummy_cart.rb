@@ -60,12 +60,14 @@ module Auchandirect
       # And to the received messages log
       attr_reader :login, :password, :log
 
+      # As the real store, the remote cart outlives the sessions
+      @@content = Hash.new(0)
+
       def initialize(login = nil, password = nil)
         @log = []
         @login = ""
         @password = ""
         @unavailable_items = {}
-        @content = Hash.new(0)
 
         if !login.nil? || !password.nil?
           relog(login, password)
@@ -89,18 +91,18 @@ module Auchandirect
 
       def empty_the_cart
         @log.push(:empty_the_cart)
-        @content.clear
+        @@content.clear
       end
 
       def add_to_cart(quantity, item)
         if available?(item)
           @log.push(:add_to_cart)
-          @content[item] += quantity
+          @@content[item] += quantity
         end
       end
 
       def cart_value
-        @content.to_a.inject(0.0) do |amount,id_and_quantity|
+        @@content.to_a.inject(0.0) do |amount,id_and_quantity|
           item = id_and_quantity.first
           quantity = id_and_quantity.last
 
@@ -112,17 +114,17 @@ module Auchandirect
 
       # Collection of all the different items in the cart
       def content
-        @content.keys
+        @@content.keys
       end
 
       # Is the cart empty ?
       def empty?
-        @content.empty?
+        @@content.empty?
       end
 
       # Does the cart contain the specified quantity of this item ?
       def containing?(item, quantity)
-        @content[item] == quantity
+        @@content[item] == quantity
       end
 
       # Makes an item temporarily unavailable

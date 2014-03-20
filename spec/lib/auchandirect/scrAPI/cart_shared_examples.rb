@@ -24,6 +24,7 @@ require 'spec_helper'
 shared_examples_for "Any Cart" do |store_cart_class, store_url|
 
   before :all do
+    @store_cart_class = store_cart_class
     @store_url = store_url
   end
 
@@ -63,7 +64,7 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
     attr_reader :sample_item_id, :another_item_id, :store_cart_api
 
     before(:all) do
-      @api = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
+      @session = new_session
 
       sample_items = extract_sample_items
       sample_item = sample_items.next
@@ -71,38 +72,38 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
       @another_item_id = extract_another_item_id(sample_items, sample_item)
     end
     before(:each) do
-      @api.empty_the_cart
+      @session.empty_the_cart
     end
 
     after(:all) do
-      @api.logout
+      @session.logout
     end
 
     # Some tests are redudant with what is item extractions, but the followings
     # are clearer about what is expected from the cart
 
     it "should set the cart value to 0 when emptying the cart" do
-      @api.add_to_cart(1, sample_item_id)
+      @session.add_to_cart(1, sample_item_id)
 
-      @api.empty_the_cart
-      expect(@api.cart_value).to eq 0
+      @session.empty_the_cart
+      expect(@session.cart_value).to eq 0
     end
 
     it "should set the cart value to something greater than 0 when adding items to the cart" do
-      @api.empty_the_cart
+      @session.empty_the_cart
 
-      @api.add_to_cart(1, sample_item_id)
-      expect(@api.cart_value).to be > 0
+      @session.add_to_cart(1, sample_item_id)
+      expect(@session.cart_value).to be > 0
     end
 
     it "should set the cart value to 2 times that of one item when adding 2 items" do
-      @api.empty_the_cart
+      @session.empty_the_cart
 
-      @api.add_to_cart(1, sample_item_id)
-      item_price = @api.cart_value
+      @session.add_to_cart(1, sample_item_id)
+      item_price = @session.cart_value
 
-      @api.add_to_cart(1, sample_item_id)
-      expect(@api.cart_value).to eq 2*item_price
+      @session.add_to_cart(1, sample_item_id)
+      expect(@session.cart_value).to eq 2*item_price
     end
 
     it "should set different cart values with different items" do
@@ -112,24 +113,41 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
       expect(sample_item_cart_value).not_to eq another_item_cart_value
     end
 
-    it "should synchronize different sessions with logout login" do
-      @api.add_to_cart(1, sample_item_id)
+    it "should save the cart between sessions" do
+      @session.add_to_cart(1, sample_item_id)
+      @session.logout
 
-      api2 = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
-      begin
-        api2.empty_the_cart
-      ensure
-        api2.logout
+      @session = new_session
+
+      expect(@session.cart_value).not_to eq 0
+    end
+
+    it "should save the cart between sessions, even while another session" do
+      background_session = @session
+
+      run_session do |session|
+        session.add_to_cart(1, sample_item_id)
       end
 
-      @api.logout
-      @api = store_cart_class.login(store_cart_class.valid_email, store_cart_class.valid_password)
-
-      expect(@api.cart_value).to eq 0
+      run_session do |session|
+        expect(session.cart_value).not_to eq 0
+      end
     end
 
     private
 
+    def run_session
+      session = new_session
+      begin
+        yield session
+      ensure
+        session.logout
+      end
+    end
+
+    def new_session
+      @store_cart_class.login(@store_cart_class.valid_email, @store_cart_class.valid_password)
+    end
     def extract_another_item_id(sample_items, sample_item)
       another_item = sample_item
       while sample_item.attributes[:price] == another_item.attributes[:price]
@@ -158,13 +176,13 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
     end
 
     def item_available?(item_id)
-      @api.empty_the_cart
-      @api.add_to_cart(1, item_id)
-      item_price = @api.cart_value
+      @session.empty_the_cart
+      @session.add_to_cart(1, item_id)
+      item_price = @session.cart_value
       return false if 0 == item_price
 
-      @api.add_to_cart(1, item_id)
-      return @api.cart_value == item_price * 2
+      @session.add_to_cart(1, item_id)
+      return @session.cart_value == item_price * 2
     end
 
     def nationaly_available_first(elements)
@@ -181,9 +199,9 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
     end
 
     def cart_value_with_item(item_id)
-      @api.empty_the_cart
-      @api.add_to_cart(1, item_id)
-      @api.cart_value
+      @session.empty_the_cart
+      @session.add_to_cart(1, item_id)
+      @session.cart_value
     end
   end
 end

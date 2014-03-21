@@ -20,7 +20,7 @@ Or install it yourself as:
 
 This library should be production ready.
 * It is automaticaly tested through [Travis](https://travis-ci.org/philou/auchandirect-scrAPI)
-* It should be daily tested through [TravisCron](http://traviscron.pythonanywhere.com/) to quickly detect modification at auchandirect.fr
+* It should be daily tested through [TravisCron](http://traviscron.pythonanywhere.com/) to quickly detect modification at www.auchandirect.fr
 
 ## Usage
 
@@ -29,6 +29,7 @@ This API has 2 main features :
 * Connecting with a user account in order to fill his cart
 
 It is not currently possible to pay and validate an order through this API. In order to do so, a user must :
+
 1. first disconnect from the API
 2. only then reconnect with his account through a browser, and order his pre-filled cart
 
@@ -66,7 +67,7 @@ end
 
 ### Client side usage
 
-In order to make it possible for a web browser to automaticaly connect to auchandirect.fr (for example in an iframe, to pay for a cart that was previously filled with this gem on the server), the cart The Auchandirect::ScrAPI::Cart classes exposes enough information to generate the html that makes this possible. You can have a look at spec/lib/auchandirect/scrAPI/client_cart_shared_examples.rb for more details. /This whole thing remains tricky and subject to failures though./
+In order to make it possible for a web browser to automaticaly connect to auchandirect.fr (for example in an iframe, to pay for a cart that was previously filled with this gem on the server), the Auchandirect::ScrAPI::Cart class exposes enough information to generate the html that makes this possible. You can have a look at spec/lib/auchandirect/scrAPI/client_cart_shared_examples.rb for more details. *This whole thing remains tricky and subject to failures though.*
 
 ### Testing
 

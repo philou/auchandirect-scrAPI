@@ -19,8 +19,8 @@ Or install it yourself as:
 ## Status
 
 This library should be production ready.
-* It is automaticaly tested through Travis[https://travis-ci.org/philou/auchandirect-scrAPI]
-* It should be daily tested through TravisCron[http://traviscron.pythonanywhere.com/] to quickly detect modification at auchandirect.fr
+* It is automaticaly tested through [Travis](https://travis-ci.org/philou/auchandirect-scrAPI)
+* It should be daily tested through [TravisCron](http://traviscron.pythonanywhere.com/) to quickly detect modification at auchandirect.fr
 
 ## Usage
 
@@ -70,7 +70,7 @@ In order to make it possible for a web browser to automaticaly connect to auchan
 
 ### Testing
 
-In order to run quicker and offline tests for the rest of your app, you can use Auchandirect::ScrAPI::DummyCart in place of a real cart. This cart is compatible with Storexplore's dummy store generators [https://github.com/philou/storexplore].
+In order to run quicker and offline tests for the rest of your app, you can use Auchandirect::ScrAPI::DummyCart in place of a real cart. This cart is compatible with Storexplore's dummy store generators (see https://github.com/philou/storexplore).
 
 ## Contributing
 

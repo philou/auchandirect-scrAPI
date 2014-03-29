@@ -94,7 +94,7 @@ AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret bundle exe
 
 ```bash
 #!/bin/sh
-AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret "$@"```
+AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret "$@"
 ```
 
 * Make it exectuable ```chmod +x credentials```

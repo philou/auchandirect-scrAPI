@@ -3,7 +3,8 @@ rvm:
   - 2.1.1
   - 2.0.0
 script: bundle exec rake
-env: AUCHANDIRECT_TEST_PASSWORD=123secret
+env:
+  global: AUCHANDIRECT_TEST_PASSWORD=123secret
 matrix:
   include:
     - rvm: 2.1.1

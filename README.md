@@ -83,22 +83,22 @@ In order to run quicker and offline tests for the rest of your app, you can use 
 
 ### Running the tests
 
-1. If you want to run the tests, you'll need valid auchandirect credentials. So first, head up to www.auchandirect.fr and create yourself an account if you don't yet have one.
-2. To run guard or rspec, you'll have to specify these credentials through environment variables :
+* If you want to run the tests, you'll need valid auchandirect credentials. So first, head up to www.auchandirect.fr and create yourself an account if you don't yet have one.
+* To run guard or rspec, you'll have to specify these credentials through environment variables :
 
 ```shell
 AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret bundle exec rspec spec
 ```
 
-3. If you get tired of repeating this, you can create yourself a 'credentials' shell script at the root of the repo :
+* If you get tired of repeating this, you can create yourself a 'credentials' shell script at the root of the repo :
 
 ```bash
 #!/bin/sh
 AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret "$@"```
 ```
 
-4. Make it exectuable ```chmod +x credentials```
-5. You can now simply run any command with your credentials
+* Make it exectuable ```chmod +x credentials```
+* You can now simply run any command with your credentials
 
 ```shell
 ./credentials bundle exec rspec spec

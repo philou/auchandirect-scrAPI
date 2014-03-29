@@ -1,14 +1,12 @@
 language: ruby
 script: bundle exec rake
-env:
-  global:
 matrix:
   include:
     - rvm: 2.1.1
       env:
        - AUCHANDIRECT_TEST_EMAIL=auchandirect.scrapi.211@mailinator.com
        - AUCHANDIRECT_TEST_PASSWORD=123secret
-    - rvm: 2.O.0
+    - rvm: 2.0.0
       env:
        - AUCHANDIRECT_TEST_EMAIL=auchandirect.scrapi.200@mailinator.com
        - AUCHANDIRECT_TEST_PASSWORD=123secret

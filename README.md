@@ -69,7 +69,7 @@ end
 
 In order to make it possible for a web browser to automaticaly connect to auchandirect.fr (for example in an iframe, to pay for a cart that was previously filled with this gem on the server), the Auchandirect::ScrAPI::Cart class exposes enough information to generate the html that makes this possible. You can have a look at spec/lib/auchandirect/scrAPI/client_cart_shared_examples.rb for more details. *This whole thing remains tricky and subject to failures though.*
 
-### Testing
+### Mocking
 
 In order to run quicker and offline tests for the rest of your app, you can use Auchandirect::ScrAPI::DummyCart in place of a real cart. This cart is compatible with Storexplore's dummy store generators (see https://github.com/philou/storexplore).
 
@@ -80,3 +80,26 @@ In order to run quicker and offline tests for the rest of your app, you can use 
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+### Running the tests
+
+1. If you want to run the tests, you'll need valid auchandirect credentials. So first, head up to www.auchandirect.fr and create yourself an account if you don't yet have one.
+2. To run guard or rspec, you'll have to specify these credentials through environment variables :
+
+```shell
+AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret bundle exec rspec spec
+```
+
+3. If you get tired of repeating this, you can create yourself a 'credentials' shell script at the root of the repo :
+
+```bash
+#!/bin/sh
+AUCHANDIRECT_TEST_EMAIL=me@mail.com AUCHANDIRECT_TEST_PASSWORD=secret "$@"```
+```
+
+4. Make it exectuable ```chmod +x credentials```
+5. You can now simply run any command with your credentials
+
+```shell
+./credentials bundle exec rspec spec
+```

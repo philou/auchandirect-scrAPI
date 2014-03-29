@@ -30,11 +30,19 @@ when_online("AuchanDirectApi remote spec") do
 
       module AuchanDirectApiCredentials
         def valid_email
-          "mes.courses.fr.test@gmail.com"
+          check_credentials
+          ENV['AUCHANDIRECT_TEST_EMAIL']
         end
         def valid_password
-          # gmail password : "mes*courses"
-          "mescourses"
+          check_credentials
+          ENV['AUCHANDIRECT_TEST_PASSWORD']
+        end
+
+        private
+        def check_credentials
+          if ENV['AUCHANDIRECT_TEST_EMAIL'].to_s.empty? or ENV['AUCHANDIRECT_TEST_PASSWORD'].to_s.empty?
+            raise RuntimeError.new("Please specify valid auchandirect credentials with env AUCHANDIRECT_TEST_EMAIL and AUCHANDIRECT_TEST_PASSWORD when running these specs")
+          end
         end
       end
       # force autoload of AuchanDirectApi

@@ -49,7 +49,7 @@ when_online("AuchanDirectApi remote spec") do
       Auchandirect::ScrAPI::Cart.send(:extend, AuchanDirectApiCredentials)
 
       describe Auchandirect::ScrAPI::Cart, slow: true, remote: true do
-        it_should_behave_like "Any Cart", Auchandirect::ScrAPI::Cart, Auchandirect::ScrAPI::Cart.url
+        it_should_behave_like "Any Cart", Auchandirect::ScrAPI::Cart, Auchandirect::ScrAPI::Items.url
         it_should_behave_like "Any Client Cart", Auchandirect::ScrAPI::Cart, "Identifiez-vous"
       end
     end

@@ -31,7 +31,7 @@ when_online "AuchanDirectStoreItemsAPI remote spec" do
         it_should_behave_like "an API"
 
         def generate_store
-          Storexplore::Api.browse("http://www.auchandirect.fr")
+          Auchandirect::ScrAPI::Items.browse
         end
 
         it "should have absolute urls for images" do

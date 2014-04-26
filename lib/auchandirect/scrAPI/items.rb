@@ -35,8 +35,18 @@ module Auchandirect
     # * price
     # * image (url of the link to the image)
     # * remote_id (the id of this item in the auchandirect database)
+    class Items
 
-    module Items
+      # Returns a Storexplore api on whole auchandirect catalog
+      def self.browse
+        Storexplore::Api.browse(url)
+      end
+
+      # Main url of the store
+      def self.url
+        "http://www.auchandirect.fr/Accueil"
+      end
+
       NAMES_SEPARATOR = ', '
     end
 

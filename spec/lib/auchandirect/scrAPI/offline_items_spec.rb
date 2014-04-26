@@ -29,7 +29,7 @@ module Auchandirect
       it_should_behave_like "an API"
 
       def generate_store
-        @offline_store_dir = File.join(AUCHANDIRECT_SCRAPI_ROOT_DIR,'offline_sites','www.auchandirect.fr')
+        @offline_store_dir = File.join(AUCHANDIRECT_SCRAPI_ROOT_DIR,'offline_sites',WEBSITE)
         auchan_direct_offline = "file://" + File.join(@offline_store_dir, 'index.html')
         Storexplore::Api.browse(auchan_direct_offline)
       end

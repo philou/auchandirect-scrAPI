@@ -44,13 +44,13 @@ module Auchandirect
 
       # Main url of the store
       def self.url
-        "http://www.auchandirect.fr/Accueil"
+        HOMEPAGE
       end
 
       NAMES_SEPARATOR = ', '
     end
 
-    Storexplore::Api.define "auchandirect.fr" do
+    Storexplore::Api.define DOMAIN do
 
       categories '#footer-menu h2 a' do
         attributes do

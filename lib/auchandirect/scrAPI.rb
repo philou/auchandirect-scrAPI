@@ -21,6 +21,7 @@
 
 require 'storexplore'
 require 'auchandirect/scrAPI/version'
+require 'auchandirect/scrAPI/constants'
 require 'auchandirect/scrAPI/items'
 require 'auchandirect/scrAPI/base_cart'
 require 'auchandirect/scrAPI/dummy_cart'

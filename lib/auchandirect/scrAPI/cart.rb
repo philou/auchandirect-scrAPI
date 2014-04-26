@@ -29,7 +29,7 @@ module Auchandirect
 
       # Main url of the store
       def self.url
-        "http://www.auchandirect.fr"
+        HOMEPAGE
       end
 
       # Logins to auchan direct store
@@ -41,7 +41,7 @@ module Auchandirect
 
       # Url at which a client browser can login
       def self.login_url
-        url + login_path
+        URL + login_path
       end
       # Parameters for a client side login
       def self.login_parameters(login, password)
@@ -64,7 +64,7 @@ module Auchandirect
 
       # Url at which a client browser can logout
       def self.logout_url
-        url + logout_path
+        URL + logout_path
       end
 
       # Logs out from the store
@@ -149,7 +149,7 @@ module Auchandirect
       end
 
       def get(path)
-        @agent.get(url + path)
+        @agent.get(URL + path)
       end
 
       def post(path, parameters = {}, headers = {})
@@ -157,7 +157,7 @@ module Auchandirect
       end
 
       def self.post(agent, path, parameters = {}, headers = {})
-        agent.post(url + path, post_parameters.merge(parameters), fast_header.merge(headers))
+        agent.post(URL + path, post_parameters.merge(parameters), fast_header.merge(headers))
       end
 
       def self.fast_header

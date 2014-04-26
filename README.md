@@ -20,7 +20,7 @@ Or install it yourself as:
 
 This library should be production ready.
 * It is automaticaly tested through [Travis](https://travis-ci.org/philou/auchandirect-scrAPI)
-* It should be daily tested through [TravisCron](http://traviscron.pythonanywhere.com/) to quickly detect modification at www.auchandirect.fr
+* It should be daily tested through [daily-travis](https://github.com/philou/daily-travis) to quickly detect modification at www.auchandirect.fr
 
 ## Usage
 
@@ -42,7 +42,7 @@ cart = Auchandirect::ScrAPI::Cart.login('buyer@mail.org', 'password')
 
 begin
 
-  Storexplore::Api.browse('http://www.auchandirect.fr').categories.each do |cat|
+  Auchandirect::ScrAPI::Items.browse.categories.each do |cat|
     cat.categories.each do |s_cat|
       s_cat.categories.each do |ss_cat|
         ss_cat.items.each do |item|

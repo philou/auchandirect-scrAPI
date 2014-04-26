@@ -122,11 +122,25 @@ module Auchandirect
       def self.login_form_data(agent)
         home_page = agent.get(Cart.url)
 
-        login_form_json = post(agent, "/boutiques.paniervolant.customerinfos:showsigninpopup", {}, {'Referer' => home_page.uri})
+        with_retry(5) do
+          login_form_json = post(agent, "/boutiques.paniervolant.customerinfos:showsigninpopup", {}, {'Referer' => home_page.uri})
 
-        html_body = JSON.parse(login_form_json.body)["zones"]["secondPopupZone"]
-        doc = Nokogiri::HTML("<html><body>#{html_body}</body></html>")
-        doc.xpath("//input[@name='#{FORMDATA_PARAMETER}']/@value").first.content
+          html_body = JSON.parse(login_form_json.body)["zones"]["popupZone"]
+          doc = Nokogiri::HTML("<html><body>#{html_body}</body></html>")
+          doc.xpath("//input[@name='#{FORMDATA_PARAMETER}']/@value").first.content
+        end
+      end
+
+      def self.with_retry(attempts)
+        begin
+          return yield
+
+        rescue Exception => e
+          attempts -= 1
+
+          retry unless attempts == 0
+          raise e
+        end
       end
 
       def logged_in?

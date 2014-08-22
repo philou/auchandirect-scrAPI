@@ -23,6 +23,7 @@ require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 
 require 'auchandirect/scrAPI'
+require 'rspec/collection_matchers'
 require 'spec_combos'
 
 # Offline testing

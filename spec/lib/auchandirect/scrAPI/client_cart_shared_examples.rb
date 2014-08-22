@@ -30,13 +30,13 @@ shared_examples_for "Any Client Cart" do |store_cart_class, please_login_text|
 
   it "logs in and out through HTTP" do
     @client = Mechanize.new
-    expect(logged_in?).to(be_false, "should not be logged in at the begining")
+    expect(logged_in?).to (be false), "should not be logged in at the begining"
 
     login
-    expect(logged_in?).to(be_true, "should be logged in after submitting the login form")
+    expect(logged_in?).to (be true), "should be logged in after submitting the login form"
 
     logout
-    expect(logged_in?).to(be_false, "should he logged out after clicking the logout link")
+    expect(logged_in?).to (be false), "should he logged out after clicking the logout link"
   end
 
   private

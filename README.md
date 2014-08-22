@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/philou/auchandirect-scrAPI.svg?branch=master)](https://travis-ci.org/philou/auchandirect-scrAPI) [![Test Coverage](https://codeclimate.com/github/philou/auchandirect-scrAPI/badges/coverage.svg)](https://codeclimate.com/github/philou/auchandirect-scrAPI) [![Code Climate](https://codeclimate.com/github/philou/auchandirect-scrAPI/badges/gpa.svg)](https://codeclimate.com/github/philou/auchandirect-scrAPI)
+
 # Auchandirect::ScrAPI
 
 A ruby gem providing, through scrapping, an API to the french www.auchandirect.fr online grocery

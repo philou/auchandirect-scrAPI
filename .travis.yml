@@ -10,3 +10,6 @@ matrix:
       env:
        - AUCHANDIRECT_TEST_EMAIL=auchandirect.scrapi.200@mailinator.com
        - AUCHANDIRECT_TEST_PASSWORD=123secret
+addons:
+  code_climate:
+    repo_token: d1c08ceac5738bb9edacbd19e9a9172cf918e4a0f82378aa4011feab06b5d998

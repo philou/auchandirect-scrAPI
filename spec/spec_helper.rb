@@ -34,9 +34,18 @@ include OfflineTestHelper
 # Gem root dir
 AUCHANDIRECT_SCRAPI_ROOT_DIR = File.join(File.dirname(__FILE__), '..')
 
-
 # Dummy store generation
 require 'storexplore/testing'
 Storexplore::Testing.config do |config|
   config.dummy_store_generation_dir= File.join(AUCHANDIRECT_SCRAPI_ROOT_DIR, 'tmp')
+end
+
+# Timeout examples when they take more that 1 minute
+require 'timeout'
+RSpec.configure do |c|
+  c.around(:each) do |example|
+    Timeout::timeout(60) {
+      example.run
+    }
+  end
 end

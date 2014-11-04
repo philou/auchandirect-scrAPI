@@ -76,7 +76,7 @@ shared_examples_for "Any Cart" do |store_cart_class, store_url|
     end
 
     after(:all) do
-      @session.logout
+      @session.logout unless @session.nil?
     end
 
     # Some tests are redudant with what is item extractions, but the followings

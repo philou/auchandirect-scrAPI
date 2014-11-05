@@ -51,6 +51,9 @@ module Auchandirect
     end
 
     Storexplore::Api.define DOMAIN do
+      agent do |it|
+        Agent.configure(it)
+      end
 
       categories '#footer-menu h2 a' do
         attributes do

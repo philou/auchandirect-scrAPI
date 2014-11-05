@@ -34,9 +34,15 @@ module Auchandirect
 
       # Logins to auchan direct store
       def initialize(login, password)
-        @agent = Mechanize.new
+        @agent = new_agent
         do_login(login, password)
         raise InvalidAccountError unless logged_in?
+      end
+
+      def self.new_agent
+        Mechanize.new do |it|
+          Agent.configure(it)
+        end
       end
 
       # Url at which a client browser can login
@@ -46,7 +52,7 @@ module Auchandirect
       # Parameters for a client side login
       def self.login_parameters(login, password)
         default_params = post_parameters.map {|name, value| {'name' => name, 'value' => value, 'type' => 'hidden'}}
-        user_params = [{'name' => FORMDATA_PARAMETER, 'value' => login_form_data(Mechanize.new), 'type' => 'hidden'},
+        user_params = [{'name' => FORMDATA_PARAMETER, 'value' => login_form_data(new_agent), 'type' => 'hidden'},
                        {'name' => LOGIN_PARAMETER, 'value' => login, 'type' => 'text'},
                        {'name' => PASSWORD_PARAMETER, 'value' => password, 'type' => 'password'}]
 
@@ -123,7 +129,7 @@ module Auchandirect
         home_page = agent.get(Cart.url)
 
         with_retry(5) do
-          login_form_json = post(agent, "/boutiques.paniervolant.customerinfos:showsigninpopup", {}, {'Referer' => home_page.uri})
+          login_form_json = post(agent, "/boutiques.paniervolant.customerinfos:showsigninpopup", {}, {'Referer' => home_page.uri.to_s})
 
           html_body = JSON.parse(login_form_json.body)["zones"]["popupZone"]
           doc = Nokogiri::HTML("<html><body>#{html_body}</body></html>")

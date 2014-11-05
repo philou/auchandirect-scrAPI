@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# auchandirect/scrAPI.rb
+# auchandirect/scrAPI/items.rb
 #
 # Copyright (c) 2010-2014 by Philippe Bourgau. All rights reserved.
 #
@@ -19,13 +19,20 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301  USA
 
-require 'storexplore'
-require 'auchandirect/scrAPI/version'
-require 'auchandirect/scrAPI/constants'
-require 'auchandirect/scrAPI/agent'
-require 'auchandirect/scrAPI/items'
-require 'auchandirect/scrAPI/base_cart'
-require 'auchandirect/scrAPI/dummy_cart'
-require 'auchandirect/scrAPI/cart'
-require 'auchandirect/scrAPI/invalid_account_error'
-require 'auchandirect/scrAPI/webrick_uri_escape_monkey_patch'
+module Auchandirect
+  module ScrAPI
+
+    # Helper class for common code around mechanize agents
+    class Agent
+
+      # Initializes agent with the auchandirect cookie for both items
+      # and cart apis.
+      def self.configure(agent)
+        agent.cookie_jar << Mechanize::Cookie.new(domain: '.auchandirect.fr',
+                                                  name: 'prehomemobile',
+                                                  value: 'prehomemobile',
+                                                  path: '/')
+      end
+    end
+  end
+end

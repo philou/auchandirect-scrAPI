@@ -29,7 +29,7 @@ shared_examples_for "Any Client Cart" do |store_cart_class, please_login_text|
   end
 
   it "logs in and out through HTTP" do
-    @client = Mechanize.new
+    @client = @store_cart_class.new_agent
     expect(logged_in?).to (be false), "should not be logged in at the begining"
 
     login

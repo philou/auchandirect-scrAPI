@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($/).reject {|f| f.match(/^offline_sites/)}
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'storexplore', '~> 0.3'
+  spec.add_dependency 'storexplore', '~> 0.4'
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

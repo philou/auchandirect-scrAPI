@@ -4,6 +4,10 @@
 
 A ruby gem providing, through scrapping, an API to the french www.auchandirect.fr online grocery
 
+## Maintainer needed
+
+I'm looking for a benevolent maintainer for this library. I don't have the time anymore to evolve it. Until someone picks it up, I'll just **try** to keep it working against auchandirect.com evolutions.
+
 ## Installation
 
 Add this line to your application's Gemfile:

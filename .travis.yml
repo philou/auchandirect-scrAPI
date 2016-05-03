@@ -2,11 +2,11 @@ language: ruby
 script: bundle exec rake
 matrix:
   include:
-    - rvm: 2.1.1
+    - rvm: 2.3.1
       env:
        - AUCHANDIRECT_TEST_EMAIL=auchandirect.scrapi.211@mailinator.com
        - AUCHANDIRECT_TEST_PASSWORD=123secret
-    - rvm: 2.0.0
+    - rvm: 2.2.5
       env:
        - AUCHANDIRECT_TEST_EMAIL=auchandirect.scrapi.200@mailinator.com
        - AUCHANDIRECT_TEST_PASSWORD=123secret

@@ -26,9 +26,9 @@ Or install it yourself as:
 
 ## Status
 
-This library should be production ready.
+~~This library should be production ready.~~
 * It is automaticaly tested through [Travis](https://travis-ci.org/philou/auchandirect-scrAPI)
-* It should be daily tested through [daily-travis](https://github.com/philou/daily-travis) to quickly detect modification at www.auchandirect.fr
+* ~~It should be daily tested through [daily-travis](https://github.com/philou/daily-travis) to quickly detect modification at www.auchandirect.fr~~
 
 ## Usage
 

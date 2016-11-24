@@ -1,3 +1,7 @@
+| :exclamation: Maintainer needed :exclamation: |
+|---------------|
+| I'm looking for a benevolent maintainer for this library. I don't have the time anymore to evolve it. Until someone picks it up, it's stuck on previous version of auchandirect.com.
+
 [![Build Status](https://travis-ci.org/philou/auchandirect-scrAPI.svg?branch=master)](https://travis-ci.org/philou/auchandirect-scrAPI) [![Test Coverage](https://codeclimate.com/github/philou/auchandirect-scrAPI/badges/coverage.svg)](https://codeclimate.com/github/philou/auchandirect-scrAPI) [![Code Climate](https://codeclimate.com/github/philou/auchandirect-scrAPI/badges/gpa.svg)](https://codeclimate.com/github/philou/auchandirect-scrAPI)
 
 # Auchandirect::ScrAPI
@@ -5,10 +9,6 @@
 A ruby gem providing, through scrapping, an API to the french www.auchandirect.fr online grocery
 
 ![A screenshot of auchandirect](https://raw.githubusercontent.com/philou/auchandirect-scrAPI/master/screenshot.jpg)
-
-## Maintainer needed
-
-I'm looking for a benevolent maintainer for this library. I don't have the time anymore to evolve it. Until someone picks it up, I'll just **try** to keep it working against auchandirect.com evolutions.
 
 ## Installation
 
